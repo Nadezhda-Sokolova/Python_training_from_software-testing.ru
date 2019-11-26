@@ -1,0 +1,1 @@
+# Python_training_from_software-testing.ru
