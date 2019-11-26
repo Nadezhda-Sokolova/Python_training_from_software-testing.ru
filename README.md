@@ -1,1 +1,1 @@
-# Python_training_from_software-testing.ru
+# Repository_for_Python_training_from_software-testing.ru
