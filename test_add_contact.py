@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest
+from contact import Contact
 
 class TestAddContact(unittest.TestCase):
     def setUp(self):
@@ -29,29 +30,29 @@ class TestAddContact(unittest.TestCase):
     def New_contact_form(self, driver):
         driver.find_element_by_link_text("add new").click()
 
-    def new_contact_creation(self, driver, first_name="First name"):
+    def new_contact_creation(self, driver, contact):
         # fill of new contact form
         driver.find_element_by_name("firstname").click()
         driver.find_element_by_name("firstname").clear()
-        driver.find_element_by_name("firstname").send_keys(first_name)
+        driver.find_element_by_name("firstname").send_keys(contact.first_name)
         driver.find_element_by_name("lastname").clear()
-        driver.find_element_by_name("lastname").send_keys("Last name")
+        driver.find_element_by_name("lastname").send_keys(contact.last_name)
         driver.find_element_by_name("address").click()
         driver.find_element_by_name("address").clear()
-        driver.find_element_by_name("address").send_keys("Nizhniy Novgorod")
+        driver.find_element_by_name("address").send_keys(contact.address)
         driver.find_element_by_name("email").click()
         driver.find_element_by_name("email").clear()
-        driver.find_element_by_name("email").send_keys("nnn@ya.ru")
+        driver.find_element_by_name("email").send_keys(contact.mail)
         driver.find_element_by_name("bday").click()
-        Select(driver.find_element_by_name("bday")).select_by_visible_text("3")
+        Select(driver.find_element_by_name("bday")).select_by_visible_text(contact.day)
         driver.find_element_by_xpath(
             "(.//*[normalize-space(text()) and normalize-space(.)='Birthday:'])[1]/following::option[5]").click()
-        Select(driver.find_element_by_name("bmonth")).select_by_visible_text("March")
+        Select(driver.find_element_by_name("bmonth")).select_by_visible_text(contact.month)
         driver.find_element_by_xpath(
             "(.//*[normalize-space(text()) and normalize-space(.)='Birthday:'])[1]/following::option[37]").click()
         driver.find_element_by_name("byear").click()
         driver.find_element_by_name("byear").clear()
-        driver.find_element_by_name("byear").send_keys("1965")
+        driver.find_element_by_name("byear").send_keys(contact.year)
         # submit new contact creation
         driver.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
@@ -67,14 +68,14 @@ class TestAddContact(unittest.TestCase):
         self.Login(driver, username="admin", password="secret")
         self.Default_form_after_login(driver)
         self.New_contact_form(driver)
-        self.new_contact_creation(driver)
+        self.new_contact_creation(driver, Contact(first_name="First name", last_name="Last name",
+                                  address="Nizhniy Novgorod", mail="nnn@ya.ru",
+                                  day="3", month="March", year="1965"))
         self.Return_to_default_page(driver)
         self.Logout(driver)
 
-
     def tearDown(self):
         self.driver.quit()
-        self.assertEqual([], self.verificationErrors)
 
 if __name__ == "__main__":
     unittest.main()
