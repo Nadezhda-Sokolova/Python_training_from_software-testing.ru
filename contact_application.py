@@ -12,7 +12,7 @@ class Application_for_contacts:
         driver = self.driver
         driver.get("http://localhost/addressbook/index.php")
 
-    def Login(self, driver, username, password):
+    def Login(self, username, password):
         driver = self.driver
         driver.find_element_by_name("user").clear()
         driver.find_element_by_name("user").send_keys(username)
@@ -41,16 +41,6 @@ class Application_for_contacts:
         driver.find_element_by_name("email").click()
         driver.find_element_by_name("email").clear()
         driver.find_element_by_name("email").send_keys(contact.mail)
-        driver.find_element_by_name("bday").click()
-        Select(driver.find_element_by_name("bday")).select_by_visible_text(contact.day)
-        driver.find_element_by_xpath(
-            "(.//*[normalize-space(text()) and normalize-space(.)='Birthday:'])[1]/following::option[5]").click()
-        Select(driver.find_element_by_name("bmonth")).select_by_visible_text(contact.month)
-        driver.find_element_by_xpath(
-            "(.//*[normalize-space(text()) and normalize-space(.)='Birthday:'])[1]/following::option[37]").click()
-        driver.find_element_by_name("byear").click()
-        driver.find_element_by_name("byear").clear()
-        driver.find_element_by_name("byear").send_keys(contact.year)
         # submit new contact creation
         driver.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
