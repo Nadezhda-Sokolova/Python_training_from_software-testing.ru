@@ -1,8 +1,6 @@
+from model.Manager import Manager
 
-class GroupHelper:
-
-    def __init__(self, app):
-        self.app = app
+class GroupHelper (Manager):
 
     def open_home_page(self):
         wd = self.app.wd

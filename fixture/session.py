@@ -1,7 +1,6 @@
+from model.Manager import Manager
 
-class SessionHelper:
-    def __init__(self, app):
-        self.app = app
+class SessionHelper (Manager):
 
     def login(self, username, password):
         wd = self.app.wd

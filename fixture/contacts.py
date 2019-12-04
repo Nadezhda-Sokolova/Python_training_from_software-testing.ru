@@ -1,9 +1,6 @@
+from model.Manager import Manager
 
-class ContactHelper:
-
-    def __init__(self, app):
-        self.app = app
-
+class ContactHelper (Manager):
 
     def Default_form_after_login(self):
         driver = self.app.driver
