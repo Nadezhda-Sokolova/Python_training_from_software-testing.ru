@@ -35,7 +35,8 @@ class ContactHelper (Manager):
         driver.find_element_by_xpath("//input[@value='Delete']").click()
         # refresh page
         driver.switch_to_alert().accept()
-
+        # press home link
+        driver.find_element_by_link_text("home").click()
 
     def Return_to_default_page(self):
         driver = self.app.driver
