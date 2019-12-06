@@ -2,7 +2,7 @@
 from model.contact import Contact
 
 def test_add_contact(app):
-    app.Open_home_page()
+
     app.session.Login(username="admin", password="secret")
     app.contacts.Default_form_after_login()
     app.contacts.New_contact_form()

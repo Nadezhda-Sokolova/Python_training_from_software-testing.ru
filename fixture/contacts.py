@@ -27,6 +27,16 @@ class ContactHelper (Manager):
         # submit new contact creation
         driver.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
+    def delete_first_contact(self):
+        driver = self.app.driver
+        # select contact checkbox
+        driver.find_element_by_name("selected[]").click()
+        # press delete button
+        driver.find_element_by_xpath("//input[@value='Delete']").click()
+        # refresh page
+        driver.switch_to_alert().accept()
+
+
     def Return_to_default_page(self):
         driver = self.app.driver
         driver.find_element_by_link_text("home page").click()
