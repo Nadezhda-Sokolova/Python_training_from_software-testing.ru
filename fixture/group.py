@@ -11,12 +11,8 @@ class GroupHelper (Manager):
         wd = self.app.wd
         wd.find_element_by_link_text("groups").click()
 
-    def create(self, group):
+    def filling_group_information(self, group):
         wd = self.app.wd
-        self.open_groups_page()
-        # init group creation
-        wd.find_element_by_name("new").click()
-        # fill group form
         wd.find_element_by_name("group_name").click()
         wd.find_element_by_name("group_name").clear()
         wd.find_element_by_name("group_name").send_keys(group.name)
@@ -26,6 +22,15 @@ class GroupHelper (Manager):
         wd.find_element_by_name("group_footer").click()
         wd.find_element_by_name("group_footer").clear()
         wd.find_element_by_name("group_footer").send_keys(group.footer)
+
+    def create(self):
+        wd = self.app.wd
+        self.open_groups_page()
+        # init group creation
+        wd.find_element_by_name("new").click()
+
+    def submit_group_creation(self):
+        wd = self.app.wd
         # submit group creation
         wd.find_element_by_name("submit").click()
         self.open_groups_page()
@@ -40,23 +45,17 @@ class GroupHelper (Manager):
         wd.find_element_by_name("delete").click()
         self.open_groups_page()
 
-    def edit (self, group):
+    def edit_group_from(self):
         wd = self.app.wd
         self.open_groups_page()
         # select group
         wd.find_element_by_name("selected[]").click()
         # press edit button
         wd.find_element_by_name("edit").click()
-        # fill information
-        wd.find_element_by_name("group_name").click()
-        wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys(group.name)
-        wd.find_element_by_name("group_header").click()
-        wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys(group.header)
-        wd.find_element_by_name("group_footer").click()
-        wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys(group.footer)
+
+
+    def submit_changes_group(self):
+        wd = self.app.wd
         # changes submit
         wd.find_element_by_name("update").click()
         # Group record has been updated
