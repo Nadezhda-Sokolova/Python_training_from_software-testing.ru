@@ -53,8 +53,6 @@ class ContactHelper (Manager):
         # press home link
         driver.find_element_by_link_text("home").click()
 
-
-
     def Return_to_default_page(self):
         driver = self.app.driver
         driver.find_element_by_link_text("home page").click()
