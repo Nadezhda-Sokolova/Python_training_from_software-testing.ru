@@ -48,6 +48,28 @@ class SessionHelper (Manager):
         driver.find_element_by_name("pass").clear()
         driver.find_element_by_name("pass").send_keys(password)
 
+    def ensure_Logout(self):
+        driver = self.app.driver
+        if self.is_Logged_in():
+            self.Logout()
+
+    def is_Logged_in(self):
+        driver = self.app.driver
+        return len(driver.find_elements_by_link_text("Logout")) > 0
+
+    def is_Logged_in_as(self, username):
+        driver = self.app.driver
+        return driver.find_element_by_xpath("//div[@id='top']/form/b").text == "("+username+")"
+
     def Logout(self):
         driver = self.app.driver
         driver.find_element_by_link_text("Logout").click()
+
+    def ensure_Login(self, username, password):
+        driver = self.app.driver
+        if self.is_Logged_in():
+            if self.is_Logged_in_as(username):
+                return
+            else:
+                self.Logout()
+        self.Login(username, password)
