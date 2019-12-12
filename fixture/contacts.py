@@ -4,7 +4,8 @@ class ContactHelper (Manager):
 
     def Open_home_page(self):
         driver = self.app.driver
-        driver.get("http://localhost/addressbook/index.php")
+        if not (driver.current_url.endswith("/addressbook/") and len(driver.find_elements_by_name('searchstring')) > 0):
+            driver.get("http://localhost/addressbook/index.php")
 
     def Default_form_after_login(self):
         driver = self.app.driver
