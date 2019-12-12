@@ -8,8 +8,8 @@ class Application:
 
     def __init__(self):
         self.driver = self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(10)
-        self.driver.implicitly_wait(10)
+        self.wd.implicitly_wait(5)
+        self.driver.implicitly_wait(5)
         self.session = SessionHelper (self)
         self.group = GroupHelper(self)
         self.contacts = ContactHelper (self)

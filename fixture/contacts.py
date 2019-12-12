@@ -2,6 +2,10 @@ from model.Manager import Manager
 
 class ContactHelper (Manager):
 
+    def Open_home_page(self):
+        driver = self.app.driver
+        driver.get("http://localhost/addressbook/index.php")
+
     def Default_form_after_login(self):
         driver = self.app.driver
         driver.find_element_by_id("LoginForm").submit()
@@ -56,3 +60,8 @@ class ContactHelper (Manager):
     def Return_to_default_page(self):
         driver = self.app.driver
         driver.find_element_by_link_text("home page").click()
+
+    def Count(self):
+        driver = self.app.driver
+        self.Open_home_page()
+        return len(driver.find_elements_by_name("selected[]"))
