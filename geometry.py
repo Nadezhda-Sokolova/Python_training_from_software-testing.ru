@@ -1,9 +1,20 @@
 
 from geom2d.point import *
 
-l1 = [Point(0,0), Point(1,2), Point(2,1)]
-#l2 = [Point(0,0), Point(1,2), Point(2,10)]
-l2 = sorted(l1)
+l = [Point(i, i*i) for i in range(-5,6) ]
 
-print(l1)
-print(l2)
+for i in range(-5,6):
+    l.append(Point(i, i*i))
+
+print(l)
+
+l2 = []
+
+for el in l:
+    l2.append(Point(el.x, -el.y))
+
+for el in l2:
+    print(el)
+
+
+
