@@ -16,3 +16,6 @@ class Point:
     def __lt__(self, other):
         return self.y < other.y
 
+    def __repr__(self):
+        return "Point(%s,%s)" %(self.x, self.y)
+
