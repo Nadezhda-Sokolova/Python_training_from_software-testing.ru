@@ -22,12 +22,12 @@ class ContactHelper (Manager):
         driver.find_element_by_name("firstname").send_keys(contact.first_name)
         driver.find_element_by_name("lastname").clear()
         driver.find_element_by_name("lastname").send_keys(contact.last_name)
-        driver.find_element_by_name("address").click()
-        driver.find_element_by_name("address").clear()
-        driver.find_element_by_name("address").send_keys(contact.address)
-        driver.find_element_by_name("email").click()
-        driver.find_element_by_name("email").clear()
-        driver.find_element_by_name("email").send_keys(contact.mail)
+        # driver.find_element_by_name("address").click()
+        # driver.find_element_by_name("address").clear()
+        # driver.find_element_by_name("address").send_keys(contact.address)
+        # driver.find_element_by_name("email").click()
+        # driver.find_element_by_name("email").clear()
+        # driver.find_element_by_name("email").send_keys(contact.mail)
 
     def Submit_new_contact_creation(self):
         driver = self.app.driver
@@ -66,3 +66,14 @@ class ContactHelper (Manager):
         driver = self.app.driver
         self.Open_home_page()
         return len(driver.find_elements_by_name("selected[]"))
+
+    def get_contacts_list(self):
+        driver = self.app.driver
+        self.Open_home_page()
+        contacts = []
+        for element in driver.find_elements_by_css_selector("td.center input"):
+            text = element.text
+            id = element.find_element_by_name("selected[]").get_attribute('value')
+            contacts.append(Contact(first_name=text, last_name=text, id = id))
+            self.Open_home_page()
+        return contacts
