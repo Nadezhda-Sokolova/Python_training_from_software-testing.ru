@@ -1,4 +1,5 @@
 from model.Manager import Manager
+from model.contact import Contact
 
 class ContactHelper (Manager):
 
@@ -71,9 +72,10 @@ class ContactHelper (Manager):
         driver = self.app.driver
         self.Open_home_page()
         contacts = []
-        for element in driver.find_elements_by_css_selector("td.center input"):
-            text = element.text
+        for element in driver.find_elements_by_css_selector("tr[name=entry]"):
             id = element.find_element_by_name("selected[]").get_attribute('value')
-            contacts.append(Contact(first_name=text, last_name=text, id = id))
-            self.Open_home_page()
+            first = element.find_element_by_tag_name("td:nth-of-type(3)").text
+            last = element.find_element_by_tag_name("td:nth-of-type(2)").text
+            contacts.append(Contact(id=id, last_name=last, first_name=first))
         return contacts
+    
