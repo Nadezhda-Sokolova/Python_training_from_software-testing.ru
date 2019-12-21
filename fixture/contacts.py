@@ -33,6 +33,7 @@ class ContactHelper (Manager):
     def Submit_new_contact_creation(self):
         driver = self.app.driver
         driver.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        self.contact_cache = None
 
     def delete_first_contact(self):
         driver = self.app.driver
@@ -44,6 +45,7 @@ class ContactHelper (Manager):
         driver.switch_to_alert().accept()
         # press home link
         driver.find_element_by_link_text("home").click()
+        self.contact_cache = None
 
     def edit_contact_form(self):
         driver = self.app.driver
@@ -58,6 +60,7 @@ class ContactHelper (Manager):
         driver.find_element_by_name("update").click()
         # press home link
         driver.find_element_by_link_text("home").click()
+        self.contact_cache = None
 
     def Return_to_default_page(self):
         driver = self.app.driver
@@ -68,14 +71,17 @@ class ContactHelper (Manager):
         self.Open_home_page()
         return len(driver.find_elements_by_name("selected[]"))
 
+    contact_cache = None
+
     def get_contacts_list(self):
-        driver = self.app.driver
-        self.Open_home_page()
-        contacts = []
-        for element in driver.find_elements_by_css_selector("tr[name=entry]"):
-            id = element.find_element_by_name("selected[]").get_attribute('value')
-            first = element.find_element_by_tag_name("td:nth-of-type(3)").text
-            last = element.find_element_by_tag_name("td:nth-of-type(2)").text
-            contacts.append(Contact(id=id, last_name=last, first_name=first))
-        return contacts
+        if self.contact_cache is None:
+            driver = self.app.driver
+            self.Open_home_page()
+            self.contact_cache = []
+            for element in driver.find_elements_by_css_selector("tr[name=entry]"):
+                id = element.find_element_by_name("selected[]").get_attribute('value')
+                first = element.find_element_by_tag_name("td:nth-of-type(3)").text
+                last = element.find_element_by_tag_name("td:nth-of-type(2)").text
+                self.contact_cache.append(Contact(id=id, last_name=last, first_name=first))
+            return list(self.contact_cache)
     

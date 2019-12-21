@@ -8,7 +8,7 @@ def test_add_contact(app):
     app.contacts.Filling_information_form(contact)
     app.contacts.Submit_new_contact_creation()
     app.contacts.Open_home_page()
+    assert len(old_contacts) + 1 == app.contacts.Count()
     new_contacts = app.contacts.get_contacts_list()
-    assert len(old_contacts) + 1 == len(new_contacts)
     old_contacts.append(contact)
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)

@@ -13,6 +13,6 @@ def test_edit_contact(app):
     app.contacts.Filling_information_form(contact)
     app.contacts.Submit_updating_form()
     new_contacts = app.contacts.get_contacts_list()
-    assert len(old_contacts) == len(new_contacts)
+    assert len(old_contacts) == app.contacts.Count()
     old_contacts[0] = contact
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
