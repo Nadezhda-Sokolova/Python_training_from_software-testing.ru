@@ -36,9 +36,12 @@ class ContactHelper (Manager):
         self.contact_cache = None
 
     def delete_first_contact(self):
+        self.delete_contact_by_index[0]
+
+    def delete_contact_by_index(self, index):
         driver = self.app.driver
         # select contact checkbox
-        driver.find_element_by_name("selected[]").click()
+        self.select_contact_by_index(index)
         # press delete button
         driver.find_element_by_xpath("//input[@value='Delete']").click()
         # refresh page
@@ -47,10 +50,17 @@ class ContactHelper (Manager):
         driver.find_element_by_link_text("home").click()
         self.contact_cache = None
 
+    def select_contact_by_index(self, index):
+        driver = self.app.driver
+        driver.find_elements_by_name("selected[]")[index].click()
+
     def edit_contact_form(self):
+        self.edit_contact_by_index[0]
+
+    def edit_contact_by_index(self, index):
         driver = self.app.driver
         # select contact checkbox
-        driver.find_element_by_name("selected[]").click()
+        self.select_contact_by_index(index)
         # press pencil icon
         driver.find_element_by_xpath("//img[@alt='Edit']").click()
 
@@ -84,4 +94,3 @@ class ContactHelper (Manager):
                 last = element.find_element_by_tag_name("td:nth-of-type(2)").text
                 self.contact_cache.append(Contact(id=id, last_name=last, first_name=first))
             return list(self.contact_cache)
-    
