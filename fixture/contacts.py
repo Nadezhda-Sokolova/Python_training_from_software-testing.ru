@@ -59,10 +59,8 @@ class ContactHelper (Manager):
 
     def edit_contact_by_index(self, index):
         driver = self.app.driver
-        # select contact checkbox
-        self.select_contact_by_index(index)
-        # press pencil icon
-        driver.find_element_by_xpath("//img[@alt='Edit']").click()
+        # press pencil for some icon
+        driver.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
 
     def Submit_updating_form(self):
         driver = self.app.driver
