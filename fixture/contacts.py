@@ -90,5 +90,29 @@ class ContactHelper (Manager):
                 id = element.find_element_by_name("selected[]").get_attribute('value')
                 first = element.find_element_by_tag_name("td:nth-of-type(3)").text
                 last = element.find_element_by_tag_name("td:nth-of-type(2)").text
-                self.contact_cache.append(Contact(id=id, last_name=last, first_name=first))
+                all_phones = element.find_element_by_tag_name("td:nth-of-type(6)").text.splitlines()
+                self.contact_cache.append(Contact(id=id, last_name=last, first_name=first, home_phone=all_phones))
+                                                  # home_phone=all_phones[0], mobile_phone=all_phones[1],
+                                                  # work_phone=all_phones[2]))
             return list(self.contact_cache)
+
+    def open_contact_view_by_index(self, index):
+        driver = self.app.driver
+        self.Open_home_page()
+        row = driver.find_elements_by_name("selected[]")[index].click()
+        cell = row.find_element_by_tag_name("td:nth-of-type(7)")
+        cell.find_element_by_tag_name("a").click()
+
+    def get_contact_info_from_edit_page(self, index):
+        driver = self.app.driver
+        self.edit_contact_by_index(index)
+        first_name = driver.find_element_by_name("firstname").get_attribute("value")
+        last_name = driver.find_element_by_name("lastname").get_attribute("value")
+        id = driver.find_element_by_name("id").get_attribute("value")
+        home_phone = driver.find_element_by_name("home").get_attribute("value")
+        work_phone = driver.find_element_by_name("work").get_attribute("value")
+        mobile_phone = driver.find_element_by_name("mobile").get_attribute("value")
+        secondary_phone = driver.find_element_by_name("fax").get_attribute("value")
+        return Contact (first_name=first_name, last_name=last_name, id=id,
+                        home_phone=home_phone, work_phone=work_phone,
+                        mobile_phone=mobile_phone)
