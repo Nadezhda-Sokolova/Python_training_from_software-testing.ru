@@ -21,8 +21,18 @@ class ContactHelper (Manager):
         driver.find_element_by_name("firstname").click()
         driver.find_element_by_name("firstname").clear()
         driver.find_element_by_name("firstname").send_keys(contact.first_name)
+        driver.find_element_by_name("lastname").click()
         driver.find_element_by_name("lastname").clear()
         driver.find_element_by_name("lastname").send_keys(contact.last_name)
+        driver.find_element_by_name("home").click()
+        driver.find_element_by_name("home").clear()
+        driver.find_element_by_name("home").send_keys(contact.home_phone)
+        driver.find_element_by_name("work").click()
+        driver.find_element_by_name("work").clear()
+        driver.find_element_by_name("work").send_keys(contact.work_phone)
+        driver.find_element_by_name("mobile").click()
+        driver.find_element_by_name("mobile").clear()
+        driver.find_element_by_name("mobile").send_keys(contact.mobile_phone)
         # driver.find_element_by_name("address").click()
         # driver.find_element_by_name("address").clear()
         # driver.find_element_by_name("address").send_keys(contact.address)
@@ -91,9 +101,9 @@ class ContactHelper (Manager):
                 first = element.find_element_by_tag_name("td:nth-of-type(3)").text
                 last = element.find_element_by_tag_name("td:nth-of-type(2)").text
                 all_phones = element.find_element_by_tag_name("td:nth-of-type(6)").text.splitlines()
-                self.contact_cache.append(Contact(id=id, last_name=last, first_name=first, home_phone=all_phones))
-                                                  # home_phone=all_phones[0], mobile_phone=all_phones[1],
-                                                  # work_phone=all_phones[2]))
+                self.contact_cache.append(Contact(id=id, last_name=last, first_name=first,
+                                                  home_phone=all_phones[0], mobile_phone=all_phones[1],
+                                                  work_phone=all_phones[2]))
             return list(self.contact_cache)
 
     def open_contact_view_by_index(self, index):
@@ -113,6 +123,6 @@ class ContactHelper (Manager):
         work_phone = driver.find_element_by_name("work").get_attribute("value")
         mobile_phone = driver.find_element_by_name("mobile").get_attribute("value")
         secondary_phone = driver.find_element_by_name("fax").get_attribute("value")
-        return Contact (first_name=first_name, last_name=last_name, id=id,
+        return Contact(first_name=first_name, last_name=last_name, id=id,
                         home_phone=home_phone, work_phone=work_phone,
                         mobile_phone=mobile_phone)

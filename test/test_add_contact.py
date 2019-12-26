@@ -3,7 +3,7 @@ from model.contact import Contact
 
 def test_add_contact(app):
     old_contacts = app.contacts.get_contacts_list()
-    contact = Contact(first_name="First name", last_name="Last name")
+    contact = Contact(first_name="First name", last_name="Last name", home_phone="213234324", work_phone="980099", mobile_phone="09876789")
     app.contacts.New_contact_form()
     app.contacts.Filling_information_form(contact)
     app.contacts.Submit_new_contact_creation()
