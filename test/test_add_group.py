@@ -3,6 +3,7 @@ from model.group import Group
 
 
 def test_add_group(app):
+    app.group.open_groups_page()
     old_groups = app.group.get_group_list()
     group = Group(name="1 G", header="description", footer="one")
     app.group.create()

@@ -59,6 +59,7 @@ class ContactHelper (Manager):
         # press home link
         driver.find_element_by_link_text("home").click()
         self.contact_cache = None
+        self.Open_home_page()
 
     def select_contact_by_index(self, index):
         driver = self.app.driver
@@ -104,7 +105,7 @@ class ContactHelper (Manager):
                 self.contact_cache.append(Contact(id=id, last_name=last, first_name=first,
                                                   home_phone=all_phones[0], mobile_phone=all_phones[1],
                                                   work_phone=all_phones[2]))
-            return list(self.contact_cache)
+        return list(self.contact_cache)
 
     def open_contact_view_by_index(self, index):
         driver = self.app.driver
@@ -115,6 +116,7 @@ class ContactHelper (Manager):
 
     def get_contact_info_from_edit_page(self, index):
         driver = self.app.driver
+        self.Open_home_page()
         self.edit_contact_by_index(index)
         first_name = driver.find_element_by_name("firstname").get_attribute("value")
         last_name = driver.find_element_by_name("lastname").get_attribute("value")
