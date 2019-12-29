@@ -1,5 +1,6 @@
 from model.Manager import Manager
 from model.contact import Contact
+import re
 
 class ContactHelper (Manager):
 
@@ -110,7 +111,7 @@ class ContactHelper (Manager):
     def open_contact_view_by_index(self, index):
         driver = self.app.driver
         self.Open_home_page()
-        row = driver.find_elements_by_name("selected[]")[index].click()
+        row = driver.find_elements_by_css_selector("tr[name=entry]")[index]
         cell = row.find_element_by_tag_name("td:nth-of-type(7)")
         cell.find_element_by_tag_name("a").click()
 
@@ -124,7 +125,22 @@ class ContactHelper (Manager):
         home_phone = driver.find_element_by_name("home").get_attribute("value")
         work_phone = driver.find_element_by_name("work").get_attribute("value")
         mobile_phone = driver.find_element_by_name("mobile").get_attribute("value")
-        secondary_phone = driver.find_element_by_name("fax").get_attribute("value")
+        fax = driver.find_element_by_name("fax").get_attribute("value")
         return Contact(first_name=first_name, last_name=last_name, id=id,
                         home_phone=home_phone, work_phone=work_phone,
-                        mobile_phone=mobile_phone)
+                        mobile_phone=mobile_phone, fax=fax)
+
+    def get_contacts_from_view_page(self, index):
+        driver = self.app.driver
+        self.open_contact_view_by_index(index)
+        text = driver.find_element_by_id('content').text
+        home_phone = re.search("H: (.*)", text).group(1)
+        work_phone = re.search("W: (.*)", text).group(1)
+        mobile_phone = re.search("M: (.*)", text).group(1)
+        fax = re.search("F: (.*)", text).group(1)
+        return Contact(home_phone=home_phone, work_phone=work_phone,
+                       mobile_phone=mobile_phone, fax=fax)
+
+
+
+
