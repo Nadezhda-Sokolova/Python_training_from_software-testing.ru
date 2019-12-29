@@ -102,10 +102,9 @@ class ContactHelper (Manager):
                 id = element.find_element_by_name("selected[]").get_attribute('value')
                 first = element.find_element_by_tag_name("td:nth-of-type(3)").text
                 last = element.find_element_by_tag_name("td:nth-of-type(2)").text
-                all_phones = element.find_element_by_tag_name("td:nth-of-type(6)").text.splitlines()
+                all_phones = element.find_element_by_tag_name("td:nth-of-type(6)").text
                 self.contact_cache.append(Contact(id=id, last_name=last, first_name=first,
-                                                  home_phone=all_phones[0], mobile_phone=all_phones[1],
-                                                  work_phone=all_phones[2]))
+                                                  all_phones_from_home_page=all_phones))
         return list(self.contact_cache)
 
     def open_contact_view_by_index(self, index):
@@ -140,7 +139,3 @@ class ContactHelper (Manager):
         fax = re.search("F: (.*)", text).group(1)
         return Contact(home_phone=home_phone, work_phone=work_phone,
                        mobile_phone=mobile_phone, fax=fax)
-
-
-
-
