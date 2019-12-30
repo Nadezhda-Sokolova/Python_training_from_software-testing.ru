@@ -25,6 +25,9 @@ class ContactHelper (Manager):
         driver.find_element_by_name("lastname").click()
         driver.find_element_by_name("lastname").clear()
         driver.find_element_by_name("lastname").send_keys(contact.last_name)
+        driver.find_element_by_name("address").click()
+        driver.find_element_by_name("address").clear()
+        driver.find_element_by_name("address").send_keys(contact.address)
         driver.find_element_by_name("home").click()
         driver.find_element_by_name("home").clear()
         driver.find_element_by_name("home").send_keys(contact.home_phone)
@@ -37,9 +40,15 @@ class ContactHelper (Manager):
         driver.find_element_by_name("fax").click()
         driver.find_element_by_name("fax").clear()
         driver.find_element_by_name("fax").send_keys(contact.fax)
-        # driver.find_element_by_name("email").click()
-        # driver.find_element_by_name("email").clear()
-        # driver.find_element_by_name("email").send_keys(contact.mail)
+        driver.find_element_by_name("email").click()
+        driver.find_element_by_name("email").clear()
+        driver.find_element_by_name("email").send_keys(contact.mail_1)
+        driver.find_element_by_name("email2").click()
+        driver.find_element_by_name("email2").clear()
+        driver.find_element_by_name("email2").send_keys(contact.mail_2)
+        driver.find_element_by_name("email3").click()
+        driver.find_element_by_name("email3").clear()
+        driver.find_element_by_name("email3").send_keys(contact.mail_3)
 
     def Submit_new_contact_creation(self):
         driver = self.app.driver
@@ -102,9 +111,12 @@ class ContactHelper (Manager):
                 id = element.find_element_by_name("selected[]").get_attribute('value')
                 first = element.find_element_by_tag_name("td:nth-of-type(3)").text
                 last = element.find_element_by_tag_name("td:nth-of-type(2)").text
+                address = element.find_element_by_tag_name("td:nth-of-type(4)").text
                 all_phones = element.find_element_by_tag_name("td:nth-of-type(6)").text
-                self.contact_cache.append(Contact(id=id, last_name=last, first_name=first,
-                                                  all_phones_from_home_page=all_phones))
+                all_emails = element.find_element_by_tag_name("td:nth-of-type(5)").text
+                self.contact_cache.append(Contact(id=id, last_name=last, first_name=first, address=address,
+                                                  all_phones_from_home_page=all_phones,
+                                                  all_emails_from_home_page=all_emails))
         return list(self.contact_cache)
 
     def open_contact_view_by_index(self, index):
@@ -121,13 +133,17 @@ class ContactHelper (Manager):
         first_name = driver.find_element_by_name("firstname").get_attribute("value")
         last_name = driver.find_element_by_name("lastname").get_attribute("value")
         id = driver.find_element_by_name("id").get_attribute("value")
+        address = driver.find_element_by_name("address").text
         home_phone = driver.find_element_by_name("home").get_attribute("value")
         work_phone = driver.find_element_by_name("work").get_attribute("value")
         mobile_phone = driver.find_element_by_name("mobile").get_attribute("value")
         fax = driver.find_element_by_name("fax").get_attribute("value")
-        return Contact(first_name=first_name, last_name=last_name, id=id,
-                        home_phone=home_phone, work_phone=work_phone,
-                        mobile_phone=mobile_phone, fax=fax)
+        mail_1 = driver.find_element_by_name("email").get_attribute("value")
+        mail_2 = driver.find_element_by_name("email2").get_attribute("value")
+        mail_3 = driver.find_element_by_name("email3").get_attribute("value")
+        return Contact(first_name=first_name, last_name=last_name, id=id, address=address,
+                       home_phone=home_phone, work_phone=work_phone, mobile_phone=mobile_phone,
+                       fax=fax, mail_1 = mail_1, mail_2=mail_2, mail_3=mail_3)
 
     def get_contacts_from_view_page(self, index):
         driver = self.app.driver
