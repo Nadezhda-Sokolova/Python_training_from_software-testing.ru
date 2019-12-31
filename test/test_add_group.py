@@ -21,7 +21,6 @@ testdata = [Group(name="", header="", footer="")] + \
 
 @pytest.mark.parametrize('group', testdata, ids=[repr(x) for x in testdata])
 def test_add_group(app, group):
-    pass
     app.group.open_groups_page()
     old_groups = app.group.get_group_list()
     app.group.create()
