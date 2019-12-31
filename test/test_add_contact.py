@@ -21,9 +21,9 @@ def random_phones(prefix, maxlen):
     return prefix + ''.join([random.choice(symbols) for i in range (random.randrange(maxlen))])
 
 
-contact_data = [Contact(first_name='', last_name='', address='',
-             home_phone='', work_phone='', mobile_phone='', fax='',
-             mail_1='', mail_2='', mail_3='')] + \
+contact_data = [Contact(first_name='Oleg', last_name='Petrov', address='Moscow',
+             home_phone='111', work_phone='222', mobile_phone='333', fax='123',
+             mail_1='kk@ya.ru', mail_2='ii@ya.by', mail_3='lala@gmail.com')] + \
                [
                    Contact(first_name=random_string("first_name is ", 8), last_name=random_string("last_name is ", 10),
                         address=random_address("address is ", 15), home_phone=random_phones("home_phone is ", 10),
