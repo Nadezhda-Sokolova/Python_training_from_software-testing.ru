@@ -87,6 +87,15 @@ class GroupHelper (Manager):
         wd.find_element_by_name("edit").click()
 
 
+
+    def edit_group_form_by_id(self, id):
+        wd = self.app.wd
+        self.open_groups_page()
+        self.select_group_by_id(id)
+        # press edit button
+        wd.find_element_by_name("edit").click()
+
+
     def submit_changes_group(self):
         wd = self.app.wd
         # changes submit
