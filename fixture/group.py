@@ -126,6 +126,19 @@ class GroupHelper (Manager):
         self.open_groups_page()
         self.group_cache = None
 
+    def modify_group_by_id(self, id, new_for_group):
+        wd = self.app.wd
+        self.open_groups_page()
+        self.select_group_by_id(id)
+        # open modification form
+        wd.find_element_by_name("edit").click()
+        # fill group form
+        self.fill_group_form(new_for_group)
+        # submit modification
+        wd.find_element_by_name("update").click()
+        self.open_groups_page()
+        self.group_cache = None
+
     def distroy (self):
         wd = self.app.wd
         self.app.wd.quit()
