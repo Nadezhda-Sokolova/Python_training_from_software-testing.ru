@@ -75,6 +75,23 @@ class ContactHelper (Manager):
         driver = self.app.driver
         driver.find_elements_by_name("selected[]")[index].click()
 
+    def delete_contact_by_id(self, id):
+        driver = self.app.driver
+        # select contact checkbox
+        self.select_contact_by_id(id)
+        # press delete button
+        driver.find_element_by_xpath("//input[@value='Delete']").click()
+        # refresh page
+        driver.switch_to_alert().accept()
+        # press home link
+        driver.find_element_by_link_text("home").click()
+        self.contact_cache = None
+        self.Open_home_page()
+
+    def select_contact_by_id(self, id):
+        driver = self.app.driver
+        driver.find_element_by_css_selector("input[value='%s']" % id).click()
+
     def edit_contact_form(self):
         self.edit_contact_by_index[0]
 
@@ -82,6 +99,13 @@ class ContactHelper (Manager):
         driver = self.app.driver
         # press pencil for some icon
         driver.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
+
+    def edit_contact_by_id(self, id):
+        driver = self.app.driver
+        self.Open_home_page()
+        self.select_contact_by_id(id)
+        # press pencil for icon
+        driver.find_element_by_xpath("//a[@href='edit.php?id=%s']" % id).click()
 
     def Submit_updating_form(self):
         driver = self.app.driver

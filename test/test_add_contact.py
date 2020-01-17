@@ -4,6 +4,34 @@ import pytest
 import random
 import string
 
+#load from bd
+def test_add_contact(app, db, json_contacts):
+    contact=json_contacts
+    old_contacts = db.get_contacts_list()
+    app.contacts.New_contact_form()
+    app.contacts.Filling_information_form(contact)
+    app.contacts.Submit_new_contact_creation()
+    app.contacts.Open_home_page()
+    assert len(old_contacts) + 1 == app.contacts.Count()
+    new_contacts = db.get_contacts_list()
+    old_contacts.append(contact)
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
+
+
+# @pytest.mark.parametrize('contact', contact_data, ids=[repr(x) for x in contact_data])
+#load from UI
+def test_add_contact(app, json_contacts):
+    contact=json_contacts
+    old_contacts = app.contacts.get_contacts_list()
+    app.contacts.New_contact_form()
+    app.contacts.Filling_information_form(contact)
+    app.contacts.Submit_new_contact_creation()
+    app.contacts.Open_home_page()
+    assert len(old_contacts) + 1 == app.contacts.Count()
+    new_contacts = app.contacts.get_contacts_list()
+    old_contacts.append(contact)
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
+
 # def random_string(prefix, maxlen):
 #     symbols = string.ascii_letters
 #     return prefix + ''.join([random.choice(symbols) for i in range (random.randrange(maxlen))])
@@ -31,17 +59,3 @@ import string
 #                         fax=random_phones("fax is ", 10), mail_1=random_mails(10, "@mail_1.ru;"),
 #                         mail_2=random_mails(10, "@mail_2.by;", ), mail_3=random_mails(10, "@mail_3.com;")) for i in range(5)]
 #
-
-
-# @pytest.mark.parametrize('contact', contact_data, ids=[repr(x) for x in contact_data])
-def test_add_contact(app, json_contacts):
-    contact=json_contacts
-    old_contacts = app.contacts.get_contacts_list()
-    app.contacts.New_contact_form()
-    app.contacts.Filling_information_form(contact)
-    app.contacts.Submit_new_contact_creation()
-    app.contacts.Open_home_page()
-    assert len(old_contacts) + 1 == app.contacts.Count()
-    new_contacts = app.contacts.get_contacts_list()
-    old_contacts.append(contact)
-    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
