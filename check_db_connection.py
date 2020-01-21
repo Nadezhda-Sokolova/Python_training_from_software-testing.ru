@@ -1,23 +1,38 @@
 #import pymysql.cursors
 
-from fixture.db import DBFixture
+from fixture.orm import ORMFixture
 
-db = DBFixture(host="127.0.0.1", name="addressbook", user="root", password="")
-
-# try:
-#     groups = db.get_group_list()
-#     for group in groups:
-#         print(group)
-#     print(len(groups))
+db = ORMFixture(host="127.0.0.1", name='addressbook', user="root", password="")
 
 try:
-    contacts = db.get_contacts_list()
-    for contact in contacts:
-        print(contact)
-    print(len(contacts))
+    l = db.get_contact_list()
+    for item in l:
+        print(item)
+    print(len(l))
 
 finally:
-    db.distroy()
+    pass
+
+
+
+# from fixture.db import DBFixture
+#
+# db = DBFixture(host="127.0.0.1", name="addressbook", user="root", password="")
+#
+# # try:
+# #     groups = db.get_group_list()
+# #     for group in groups:
+# #         print(group)
+# #     print(len(groups))
+#
+# try:
+#     contacts = db.get_contacts_list()
+#     for contact in contacts:
+#         print(contact)
+#     print(len(contacts))
+#
+# finally:
+#     db.distroy()
 
 
 # connection = pymysql.connect(host="127.0.0.1", database="addressbook", user="root", password="")
