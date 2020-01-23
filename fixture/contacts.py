@@ -179,3 +179,4 @@ class ContactHelper (Manager):
         fax = re.search("F: (.*)", text).group(1)
         return Contact(home_phone=home_phone, work_phone=work_phone,
                        mobile_phone=mobile_phone, fax=fax)
+
