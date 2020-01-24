@@ -1,5 +1,6 @@
 from model.Manager import Manager
 from model.group import Group
+import random
 
 class GroupHelper (Manager):
 
@@ -160,3 +161,27 @@ class GroupHelper (Manager):
                 id = element.find_element_by_name("selected[]").get_attribute('value')
                 self.group_cache.append(Group(name=text, id = id))
         return list(self.group_cache)
+
+
+
+    def adding_contact_to_any_group(self, id):
+        wd = self.app.wd
+        group = random.choice(self.get_group_list())
+        self.app.contacts.Open_home_page()
+        self.app.contacts.select_contact_by_id(id)
+        wd.find_element_by_name("to_group")#.click()
+        for element in wd.find_element_by_css_selector("div[name=right]"):
+            wd.find_element_by_name("selected[]").get_attribute('option[value=%s]' % group.id).click()
+            wd.find_element_by_css_selector("input[value='Add to']").click()
+            wd.find_element_by_xpath("//a[contains(@href, './?group=group.id')]")
+            text = wd.find_element_by_id('content').text
+            if text == ('%s description' % group.name):
+                self.app.contacts.get_contact_info_from_edit_page(id)
+
+
+
+
+
+
+
+
