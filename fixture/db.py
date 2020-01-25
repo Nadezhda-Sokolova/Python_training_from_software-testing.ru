@@ -36,6 +36,20 @@ class DBFixture():
             cursor.close()
         return list
 
+    def get_contacts_list_for_selected_group(self, group_id):
+        list = []
+        cursor = self.connection.cursor(group_id)
+        try:
+           cursor.execute("select id, firstname, lastname, address, home, mobile, work, fax, email, email2, email3 from addressbook where deprecated='0000-00-00 00:00:00'")
+           for row in cursor:
+               (id, first_name, last_name, address, home_phone, mobile_phone, work_phone, fax, mail_1, mail_2, mail_3 ) = row
+               list.append(Contact(id=str(id), first_name=first_name, last_name=last_name, address=address,
+                                 home_phone=home_phone, mobile_phone=mobile_phone, work_phone=work_phone, fax=fax, mail_1=mail_1, mail_2=mail_2, mail_3=mail_3 ))
+        finally:
+            cursor.close()
+        return list
+
 
     def distroy(self):
         self.connection.close()
+

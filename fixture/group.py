@@ -163,21 +163,28 @@ class GroupHelper (Manager):
         return list(self.group_cache)
 
 
+    def select_group_adding_contact(self):
+        wd = self.app.wd
+        group = random.choice(self.get_group_list())
+        return group.id
+
+
 
     def adding_contact_to_any_group(self, id):
         wd = self.app.wd
-        group = random.choice(self.get_group_list())
+        group_id=self.select_group_adding_contact()
         self.app.contacts.Open_home_page()
         self.app.contacts.select_contact_by_id(id)
-        wd.find_element_by_name("to_group")#.click()
-        for element in wd.find_element_by_css_selector("div[name=right]"):
-            wd.find_element_by_name("selected[]").get_attribute('option[value=%s]' % group.id).click()
-            wd.find_element_by_css_selector("input[value='Add to']").click()
-            wd.find_element_by_xpath("//a[contains(@href, './?group=group.id')]")
-            text = wd.find_element_by_id('content').text
-            if text == ('%s description' % group.name):
-                self.app.contacts.get_contact_info_from_edit_page(id)
+        wd.find_element_by_css_selector("[name=to_group]").click()
+        wd.find_element_by_xpath("//option[@value = %s]" % group_id).click()
+        wd.find_element_by_css_selector("input[value='Add to']").click()
 
+
+    def looking_contacts_in_selected_group(self, group_id):
+        wd = self.app.wd
+        self.app.contacts.Open_home_page()
+        wd.find_element_by_css_selector("[name=group]").click()
+        wd.find_element_by_xpath("//option[@value = %s]" % group_id).click()
 
 
 

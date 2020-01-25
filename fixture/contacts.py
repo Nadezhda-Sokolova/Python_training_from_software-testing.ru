@@ -124,7 +124,28 @@ class ContactHelper (Manager):
         self.Open_home_page()
         return len(driver.find_elements_by_name("selected[]"))
 
+    def count_for_selected_group(self, group_id):
+        driver = self.app.driver
+        self.app.group.looking_contacts_in_selected_group(group_id)
+        return len(driver.find_elements_by_name("selected[]"))
+
     contact_cache = None
+
+    def get_list_from_web(self):
+        driver = self.app.driver
+        self.contact_cache = []
+        for element in driver.find_elements_by_css_selector("tr[name=entry]"):
+            id = element.find_element_by_name("selected[]").get_attribute('value')
+            first = element.find_element_by_tag_name("td:nth-of-type(3)").text
+            last = element.find_element_by_tag_name("td:nth-of-type(2)").text
+            address = element.find_element_by_tag_name("td:nth-of-type(4)").text
+            all_phones = element.find_element_by_tag_name("td:nth-of-type(6)").text
+            all_emails = element.find_element_by_tag_name("td:nth-of-type(5)").text
+            self.contact_cache.append(Contact(id=id, last_name=last, first_name=first, address=address,
+                                              all_phones_from_home_page=all_phones,
+                                              all_emails_from_home_page=all_emails))
+        return list(self.contact_cache)
+
 
     def get_contacts_list(self):
         if self.contact_cache is None:
@@ -142,6 +163,26 @@ class ContactHelper (Manager):
                                                   all_phones_from_home_page=all_phones,
                                                   all_emails_from_home_page=all_emails))
         return list(self.contact_cache)
+
+
+
+    def get_in_selected_group(self, group_id):
+        if self.contact_cache is None:
+            driver = self.app.driver
+            self.app.group.looking_contacts_in_selected_group(group_id)
+            self.contact_cache = []
+            for element in driver.find_elements_by_css_selector("tr[name=entry]"):
+                id = element.find_element_by_name("selected[]").get_attribute('value')
+                first = element.find_element_by_tag_name("td:nth-of-type(3)").text
+                last = element.find_element_by_tag_name("td:nth-of-type(2)").text
+                address = element.find_element_by_tag_name("td:nth-of-type(4)").text
+                all_phones = element.find_element_by_tag_name("td:nth-of-type(6)").text
+                all_emails = element.find_element_by_tag_name("td:nth-of-type(5)").text
+                self.contact_cache.append(Contact(id=id, last_name=last, first_name=first, address=address,
+                                                  all_phones_from_home_page=all_phones,
+                                                  all_emails_from_home_page=all_emails))
+        return list(self.contact_cache)
+
 
     def open_contact_view_by_index(self, index):
         driver = self.app.driver

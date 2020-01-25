@@ -7,7 +7,8 @@ def test_delete_first_contact(app, db, check_ui):
     if app.contacts.Count() == 0:
         app.contacts.New_contact_form()
         app.contacts.Filling_information_form(Contact(first_name="Delete name", last_name="For deleting name",
-                                                      home_phone="567", work_phone="444", mobile_phone="777"))
+                                                      home_phone="567", work_phone="444", mobile_phone="777", fax='567',
+                                                      mail_1='eee', mail_2='yyy', mail_3='tttt'))
         app.contacts.Submit_new_contact_creation()
         app.contacts.Open_home_page()
     old_contacts = db.get_contacts_list()
