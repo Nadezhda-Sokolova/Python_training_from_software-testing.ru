@@ -28,11 +28,11 @@ def test_to_add_contact_in_group(app, db, json_contacts, check_ui):
         return old_list_for_added_group
     app.group.adding_contact_to_any_group(id)
     app.group.looking_contacts_in_selected_group(group_id)
-    new_contacts = app.contacts.get_in_selected_group(group_id)
+    new_contacts = app.contacts.get_contacts_in_selected_group(group_id)
     assert len(old_list_for_added_group) + 1 == app.contacts.count_for_selected_group(group_id)
     bd_contacts_for_selected_group = db.get_contacts_list_for_selected_group(group_id)
     if check_ui:
-        assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contacts.get_in_selected_group(group_id), key=Contact.id_or_max)
+        assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contacts.get_contacts_in_selected_group(group_id), key=Contact.id_or_max)
         assert sorted(new_contacts, key=Contact.id_or_max) == sorted(bd_contacts_for_selected_group, key=Contact.id_or_max)
 
 

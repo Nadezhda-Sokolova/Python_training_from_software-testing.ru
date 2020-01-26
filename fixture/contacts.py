@@ -157,7 +157,7 @@ class ContactHelper (Manager):
 
 
 
-    def get_in_selected_group(self, group_id):
+    def get_contacts_in_selected_group(self, group_id):
         if self.contact_cache is None:
             driver = self.app.driver
             self.app.group.looking_contacts_in_selected_group(group_id)

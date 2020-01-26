@@ -187,6 +187,16 @@ class GroupHelper (Manager):
         wd.find_element_by_xpath("//option[@value = %s]" % group_id).click()
 
 
+    def deleting_contact_from_group(self, group, id):
+        wd = self.app.wd
+        self.looking_contacts_in_selected_group(group.id)
+        self.app.contacts.select_contact_by_id(id)
+        wd.find_element_by_css_selector("input[value=Remove from '%s']" % group.name).click()
+        self.looking_contacts_in_selected_group(group.id)
+
+
+
+
 
 
 
