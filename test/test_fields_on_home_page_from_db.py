@@ -4,7 +4,7 @@ from random import randrange
 
 
 #load from db
-def test_fields_on_home_page(app, db):
+def test_fields_on_home_page(app, db, check_ui):
     app.contacts.Open_home_page()
     if app.contacts.Count() == 0:
         app.contacts.New_contact_form()
@@ -15,19 +15,17 @@ def test_fields_on_home_page(app, db):
         app.contacts.Open_home_page()
     contacts_from_ui = sorted(app.contacts.get_contacts_list(), key=Contact.id_or_max)
     contacts_from_db = sorted(db.get_contacts_list(), key=Contact.id_or_max)
-    index=0
-    while index <= len(contacts_from_ui):
-        assert contacts_from_ui[index].first_name == contacts_from_db[index].first_name
-        assert contacts_from_ui[index].last_name == contacts_from_db[index].last_name
-        assert contacts_from_ui[index].address == contacts_from_db[index].address
+    index = 0
+    while index <= int((len(contacts_from_ui)-1)):
         contact = contacts_from_db[index]
-        assert contacts_from_ui[index].all_phones_from_home_page == merge_phones_like_on_home_page(contact)
-        assert contacts_from_ui[index].all_emails_from_home_page == merge_all_emails_from_home_page(contact)
+        if check_ui:
+            assert contacts_from_ui[index].first_name == contacts_from_db[index].first_name
+            assert contacts_from_ui[index].last_name == contacts_from_db[index].last_name
+            assert contacts_from_ui[index].address == contacts_from_db[index].address
+            assert contacts_from_ui[index].all_phones_from_home_page == merge_phones_like_on_home_page(contact)
+            assert contacts_from_ui[index].all_emails_from_home_page == merge_all_emails_from_home_page(contact)
         index=index+1
-        return index
-    pass
-
-
+    print (index)
 
 
 def clear(s):
