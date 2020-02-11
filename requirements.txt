@@ -1,4 +1,4 @@
-pytest==4.5.0
+pytest
 pytest_bdd
 selenium
 jsonpickle
